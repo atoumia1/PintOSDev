@@ -515,8 +515,11 @@ setup_stack (void **esp, int argc, const char** argv)
           printf("argv_addr value is: %s\n", argv_addr[i]);
           printf("string length is: %d\n", str_len);
 	}	
-     // Then add padding
-        *esp = (void*)((unsigned int)(*esp) & 0xfffffffc);
+     // Adding padding
+        //*esp = (void*)((unsigned int)(*esp) & 0xfffffffc);
+	size_t padding = ((size_t) (*esp)) % 4;
+	*esp -= padding;
+	memset(*esp, 0, padding);
 
      // Pushing 4 bytes of 0
         *esp -= 4;
@@ -539,6 +542,8 @@ setup_stack (void **esp, int argc, const char** argv)
      // Stack return address
 	*esp -= 4;
 	*((int*) *esp) = 0;
+
+
       }
       else
         palloc_free_page (kpage);
