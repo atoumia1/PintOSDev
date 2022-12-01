@@ -497,12 +497,12 @@ setup_stack (void **esp, int argc, const char** argv)
      // Array to hold argument addresses
         char* argv_addr[argc];
 
-	for (int i = 0; i < argc; i++) {
+	for (int i = argc -1; i >= 0; i--) {
        // Gives string the token to point to
 	  string = argv[i];
        
        // Stores the size of string
-          str_len = strlen(argv[i]) +1;
+          str_len = strlen(string) +1;
 
        // Then decrement esp by the size of the string
 	  *esp -= str_len; 
@@ -516,7 +516,6 @@ setup_stack (void **esp, int argc, const char** argv)
           printf("string length is: %d\n", str_len);
 	}	
      // Adding padding
-        //*esp = (void*)((unsigned int)(*esp) & 0xfffffffc);
 	size_t padding = ((size_t) (*esp)) % 4;
 	*esp -= padding;
 	memset(*esp, 0, padding);
@@ -526,24 +525,26 @@ setup_stack (void **esp, int argc, const char** argv)
 	*((uint32_t*) *esp) = 0;
 	
      // Pushing argv addresses onto the stack
-	for (int j = argc - 1; j >= 0; j--) {
+	for (int j = argc -1; j >= 0; j--) {
 	  *esp -= 4;
-	  *((void**) *esp) = argv_addr[j];
+	  *((void**)*esp) = argv_addr[j];
 	}
 	
      //	Pointer pointing to the argv addresses
         *esp -= 4;
-	*((void**) *esp) = (*esp + 4);
+	*((void**)*esp) = *esp + 4;
 	
      // Adding argc
 	*esp -= 4;
-	*((int*) *esp) = argc;
+	*((int*)*esp) = argc;
 
      // Stack return address
 	*esp -= 4;
-	*((int*) *esp) = 0;
+	*((int*)*esp) = 0;
 
-
+     // Hex dump
+        hex_dump((uintptr_t)*esp, *esp, PHYS_BASE - *esp, true);
+	printf("\n\n");
       }
       else
         palloc_free_page (kpage);
