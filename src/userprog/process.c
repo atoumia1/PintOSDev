@@ -502,7 +502,7 @@ setup_stack (void **esp, int argc, const char** argv)
 	  string = argv[i];
        
        // Stores the size of string
-          str_len = strlen(string) +1;
+          str_len = strlen(string) + 1;
 
        // Then decrement esp by the size of the string
 	  *esp -= str_len; 
@@ -540,11 +540,11 @@ setup_stack (void **esp, int argc, const char** argv)
 
      // Stack return address
 	*esp -= 4;
-	*((int*)*esp) = 0;
+	*((uint32_t*) *esp) = 0;
 
      // Hex dump
         hex_dump((uintptr_t)*esp, *esp, PHYS_BASE - *esp, true);
-	printf("\n\n");
+	printf("\n");
       }
       else
         palloc_free_page (kpage);
