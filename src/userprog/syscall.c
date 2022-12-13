@@ -60,7 +60,7 @@ bool remove(const char *file)
 
 pid_t exec(const char *cmdline)
 {
-  
+  //name passed incorrectly, needs tokenisation (if '\0') 
   pid_t pid = process_execute(cmdline);
     if (pid == TID_ERROR)
       return -1;
@@ -138,9 +138,10 @@ syscall_handler(struct intr_frame *f UNUSED)
     }
     case SYS_REMOVE:
     {
-      printf("filename = %s\n", (const char *)*(esp + 1));
+      printf("removed filename = %s\n", (const char *)*(esp + 1));
       bool testRemove = remove((const char *)*(esp + 1));
       f->eax = testRemove;
+      printf("test remove\n");
       break;
     }
     case SYS_EXIT:
@@ -153,8 +154,11 @@ syscall_handler(struct intr_frame *f UNUSED)
     }
     case SYS_EXEC:
     {
+      printf("exec test1 \n");
       int testExec = exec((const char *)*(esp + 1));
+      printf("exec test2\n");
       f->eax = testExec;
+      printf("exec test3\n");
       break;
     }
     // case SYS_OPEN:
@@ -171,9 +175,3 @@ syscall_handler(struct intr_frame *f UNUSED)
   }
   
 }
-
-
-
-// bool syscreate(){
-//   return filesys_create(file, initial_size);
-// }
