@@ -514,12 +514,13 @@ setup_stack (void **esp, int argc, const char** argv)
 	  argv_addr[i] = *esp;
           printf("argv_addr value is: %s\n", argv_addr[i]);
           printf("string length is: %d\n", str_len);
-	}	
+	}
+
      // Adding padding
 	size_t padding = ((size_t) (*esp)) % 4;
 	*esp -= padding;
 	memset(*esp, 0, padding);
-
+    
      // Pushing 4 bytes of 0
         *esp -= 4;
 	*((uint32_t*) *esp) = 0;
@@ -532,16 +533,16 @@ setup_stack (void **esp, int argc, const char** argv)
 	
      //	Pointer pointing to the argv addresses
         *esp -= 4;
-	*((void**)*esp) = *esp + 4;
-	
+	*((void**) *esp) = *esp + 4;
+     
      // Adding argc
 	*esp -= 4;
-	*((int*)*esp) = argc;
+	*((int*) *esp) = argc;
 
      // Stack return address
 	*esp -= 4;
 	*((uint32_t*) *esp) = 0;
-
+     
      // Hex dump
         hex_dump((uintptr_t)*esp, *esp, PHYS_BASE - *esp, true);
 	printf("\n");
