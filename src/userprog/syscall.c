@@ -68,6 +68,13 @@ bool create(const char *file, unsigned initial_size)
   return filesys_create(file, initial_size);
 }
 
+bool remove(const char *file)
+{
+  printf("test remove\n");
+
+  return filesys_remove(file);
+}
+
 /* Syscall handler has access to the structure 'int_frame' in order
 to create interupts when a system call is requested, defining it as
 'f' so we access variables within the struct such as 'esp' or 'eax' */
@@ -105,6 +112,15 @@ syscall_handler (struct intr_frame *f UNUSED)
       bool testCreate = create(cre_name, cre_size);
       f->eax = testCreate;
       printf("test create\n");
+      break;
+    }
+    case SYS_REMOVE:
+    {
+      printf("filename = %s\n", (const char *)(f->esp + 4));
+      const char *rem_name = (const char *)(f->esp + 4);
+      bool testRemove = remove(rem_name);
+      f->eax = testRemove;
+      printf("test remove\n");
       break;
     }
     // default:
