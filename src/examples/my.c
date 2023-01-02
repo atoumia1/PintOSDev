@@ -3,9 +3,10 @@
 
 int main (void)
 {
-    //printf("Hello, World\n");
-    create("text.txt", 100);
-    remove("text.txt");
-    exec("hello again!!");
+    printf("Hello, World\n");
+    create("text.txt", 1);
+    halt();
+    //remove("text.txt");
+    //exec("hello again!!");
     return 0;
 }

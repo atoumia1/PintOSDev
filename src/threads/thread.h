@@ -90,12 +90,22 @@ struct thread
     int priority;                       /* Priority. */
     struct list_elem allelem;           /* List element for all threads list. */
 
+    //new variables
+    //int exit_status;
+
+
     /* Shared between thread.c and synch.c. */
     struct list_elem elem;              /* List element. */
       
 #ifdef USERPROG
     /* Owned by userprog/process.c. */
     uint32_t *pagedir;                  /* Page directory. */
+
+   /*New Variables*/
+   int exit_code;
+   
+   
+
 #endif
 
     /* Owned by thread.c. */
