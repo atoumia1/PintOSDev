@@ -175,7 +175,7 @@ syscall_handler (struct intr_frame *f UNUSED)
 
        bool testWrite = write(fd, buffer, size);
 
-       f->eax = write(fd, buffer, size);
+       f->eax = testWrite;
 	   break;
      }
     default:
@@ -185,8 +185,4 @@ syscall_handler (struct intr_frame *f UNUSED)
   }
   printf ("system call!\n");
   thread_exit ();
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> master

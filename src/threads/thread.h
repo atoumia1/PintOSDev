@@ -93,10 +93,6 @@ struct thread
     //new variables
     int exit_code;
 
-    //new variables
-    int exit_code;
-
-
     /* Shared between thread.c and synch.c. */
     struct list_elem elem;              /* List element. */
       
