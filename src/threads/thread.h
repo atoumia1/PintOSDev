@@ -91,7 +91,7 @@ struct thread
     struct list_elem allelem;           /* List element for all threads list. */
 
     //new variables
-    //int exit_status;
+    int exit_code;
 
 
     /* Shared between thread.c and synch.c. */
@@ -102,10 +102,7 @@ struct thread
     uint32_t *pagedir;                  /* Page directory. */
 
    /*New Variables*/
-   int exit_code;
-   
-   
-
+   //int exit_code;
 #endif
 
     /* Owned by thread.c. */

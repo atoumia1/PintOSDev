@@ -46,13 +46,14 @@ void halt(void)
 message or */
 void exit(int status)
 {
-  if (status == EXIT_FAILURE || status > 0)
-  {
-    printf("%s: exit failure(%d)\n", thread_name(), status);
-  }
+  // if (status == EXIT_FAILURE || status > 0)
+  // {
+  //   printf("%s: exit failure(%d)\n", thread_name(), status);
+  // }
   struct thread *cur = thread_current();
-  cur->exit_code = status;
-  printf("%s: exit(%d)\n", cur->name, cur->exit_code);
+  char* t_name = cur->name;
+  //cur->name = status;
+  printf("%s: exit(%d)\n", t_name, status);
   thread_exit();
 }
 
@@ -70,10 +71,25 @@ bool create(const char *file, unsigned initial_size)
 
 bool remove(const char *file)
 {
-  printf("test remove\n");
-
-  return filesys_remove(file);
+  printf("test remove %s\n",file);
+  bool rem_succ = filesys_remove(file);
+  
+  return rem_succ;
 }
+
+// int write(int fd, const void *buffer, unsigned size)
+// {
+// 	if(fd == 1)
+// 	{
+// 		putbuf(buffer, size);
+// 		return size;
+// 	}
+//         else
+// 	{
+// 		return 0;
+// 	}
+// }
+
 
 /* Syscall handler has access to the structure 'int_frame' in order
 to create interupts when a system call is requested, defining it as
@@ -81,12 +97,16 @@ to create interupts when a system call is requested, defining it as
 static void
 syscall_handler (struct intr_frame *f UNUSED)
 {
+  //tests
   //int sys_code = 4;
   
+  int *esp = f->esp;
+  int sys_code = *esp;
+
   //refuses to work atm, doesnt get syscodes when called to
   // does that mean they're not on the stack, or we call to them wrong
   //or stack doesnt load them properly(least likely)
-  int sys_code = *(int*)f->esp;
+  //int sys_code = *(int*)f->esp;
   
   /* Switch statement uses 'sys_code' in order to determine the next syscall
   a user program is requesting access to. Each case's name has already
@@ -100,15 +120,15 @@ syscall_handler (struct intr_frame *f UNUSED)
     }
     case SYS_EXIT:
     {
-      int status = (unsigned)(f->esp + 4);
+      int status = (unsigned)*(esp + 1);
       exit(status);
       break;
     }
     case SYS_CREATE:
     {
-      printf("filename = %s\n", (const char *)(f->esp + 4));
-      const char *cre_name = (const char *)(f->esp + 4);
-      unsigned int cre_size =  (unsigned)(f->esp + 8);
+      printf("filename = %s\n", (const char *)*(esp + 1));
+      const char *cre_name = (const char *)*(esp + 1);
+      unsigned int cre_size =  (unsigned)*(esp + 2);
       bool testCreate = create(cre_name, cre_size);
       f->eax = testCreate;
       printf("test create\n");
@@ -116,17 +136,32 @@ syscall_handler (struct intr_frame *f UNUSED)
     }
     case SYS_REMOVE:
     {
-      printf("filename = %s\n", (const char *)(f->esp + 4));
-      const char *rem_name = (const char *)(f->esp + 4);
+      printf("filename = %s\n", (const char *)*(esp + 1));
+      const char *rem_name = (const char *)*(esp + 1);
       bool testRemove = remove(rem_name);
       f->eax = testRemove;
       printf("test remove\n");
       break;
     }
-    // default:
+    // case SYS_WRITE:
     // {
-    //   printf("NO SYSCALL!");
+	  //   int fd;
+	  //   void* buffer;
+	  //   int size;
+	  //   printf("sys write called\n");
+	  //   memcpy(&fd, f->esp + 4,4);
+	  //   memcpy(&buffer, f->esp + 8,4);
+	  //   memcpy(&size, f->esp + 12,4);
+
+    //   bool testWrite = write(fd, buffer, size);
+
+    //   f->eax = write(fd, buffer, size);
+	  // break;
     // }
+    default:
+    {
+      printf("NO SYSCALL!");
+    }
   }
   printf ("system call!\n");
   thread_exit ();
