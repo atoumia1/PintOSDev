@@ -66,7 +66,9 @@ bool create(const char *file, unsigned initial_size)
   two paramaters being a file name and file size. Filesys_create
   uses inodes (index nodes) as well as the information taken from
   the user to create a file in user disk space*/
-  return filesys_create(file, initial_size);
+  bool cre_succ = filesys_create(file, initial_size);
+  
+  return cre_succ;
 }
 
 bool remove(const char *file)
@@ -108,7 +110,7 @@ static void
 syscall_handler (struct intr_frame *f UNUSED)
 {
   //tests
-  //int sys_code = 4;
+  //int sys_code = 5;
   
   int *esp = f->esp;
   int sys_code = *esp;

@@ -1,21 +1,18 @@
 #include <stdio.h>
 #include <syscall.h>
-#include "userprog/syscall.h"
-#include "lib/stdio.h"
-#include <syscall-nr.h>
-#include "threads/interrupt.h"
 
-int main(void)
+int
+main (int argc, char *argv[]) 
 {
-    printf("Test 1\n");
-    create("text.txt", 0);
-    printf("Test 2\n");
-    remove("test.txt");
-    printf("Test 3\n");
-    halt();
-    //exit(0);
-    //remove("text.txt");
-    //exec("hello again!!");
-    return 0;
+  bool success = true;
+  int i;
+  
+  for (i = 1; i < argc; i++)
+    if (!create (argv[i], 0)) 
+      {
+        printf ("%s: remove failed\n", argv[i]);
+        success = false; 
+      }
+  return success ? EXIT_SUCCESS : EXIT_FAILURE;
 }
 
