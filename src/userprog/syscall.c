@@ -61,7 +61,7 @@ void exit(int status)
 function 'filesys_create'. Creating a file does not open it. */
 bool create(const char *file, unsigned initial_size)
 {
-  printf("test create\n");
+  printf("test create V %s\n",file);
   /* Filesys_create is defined in filesys/filesys.c, accepting
   two paramaters being a file name and file size. Filesys_create
   uses inodes (index nodes) as well as the information taken from
@@ -73,7 +73,7 @@ bool create(const char *file, unsigned initial_size)
 
 bool remove(const char *file)
 {
-  printf("test remove %s\n",file);
+  printf("test remove V %s\n",file);
   bool rem_succ = filesys_remove(file);
   
   return rem_succ;
@@ -185,6 +185,6 @@ syscall_handler (struct intr_frame *f UNUSED)
       printf("NO SYSCALL!");
     }
   }
-  printf ("system call!\n");
-  thread_exit ();
+  //printf ("system call!\n");
+  //thread_exit ();
 }
