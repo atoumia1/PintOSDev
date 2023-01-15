@@ -21,7 +21,7 @@ char shellcode[] =
 /*
   The shellcode above can be translated to the following steps
   
-  0:  90                      nop
+  0:  90                      nop             -- no operation value, acts as a place holder
   1:  90                      nop
   2:  90                      nop
   3:  90                      nop

