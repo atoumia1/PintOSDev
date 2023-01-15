@@ -17,9 +17,9 @@
 
 char shellcode[] =
   "\x90\x90\x90\x90\x90\xe9\x0b\x00"
-  "\x00\x00\x6a\x02\xcd\x30\x31\xc0"
+  "\x00\x00\x6a\x04\xcd\x30\x31\xc0"
   "\x50\x40\x50\xcd\x30\xe8\xf0\xff"
-  "\xff\xff""echo x y z";
+  "\xff\xff""test";
 
 /* And this is rather scary amazing...  This is also the below
  * assembly code in binary form, but now using ONLY alphanumeric

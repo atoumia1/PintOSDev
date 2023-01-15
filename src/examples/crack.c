@@ -6,11 +6,13 @@ Litborn, J.(2022), Pintos, Available from: https://gitlab.liu.se/johli603/pintos
 */
 
 #include <syscall.h>
+#include <stdio.h>
+#include <string.h>
 
-const char* rmthis = "test";
+const char* exploit = "test.txt";
 
 int main (void)
 {
-  remove(rmthis);
+  create(exploit, 0);
   return 0;
 }
