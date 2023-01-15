@@ -33,11 +33,6 @@ char shellcode[] =
   It then takes the input "echo x y z" and uses it with the syscall exec
   
 */
-/* And this is rather scary amazing...  This is also the below
- * assembly code in binary form, but now using ONLY alphanumeric
- * characters. It works flawless...  Using something like isalpha() on
- * input does not prevent crackers to exploit buffer overflows.
- */
 
 int main( void )
 {
