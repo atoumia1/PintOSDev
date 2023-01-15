@@ -30,11 +30,11 @@ char shellcode[] =
   a:  6a 02                   push   0x2      -- exec syscall number
   c:  cd 30                   int    0x30
   e:  31 c0                   xor    eax,eax  -- returns value of 0
-  10: 50                      push   eax      -- pushes value of 0
-  11: 40                      inc    eax
-  12: 50                      push   eax
-  13: cd 30                   int    0x30
-  15: e8 f0 ff ff ff          call   0xa
+  10: 50                      push   eax      -- pushes new 0 value
+  11: 40                      inc    eax      -- incriments value of eax by 1
+  12: 50                      push   eax      -- pushes new 1 value
+  13: cd 30                   int    0x30     -- creates interupt
+  15: e8 f0 ff ff ff          call   0xa      -- calls a function, '0xa' is the hex value of an ascii newline character
   It then takes the input "echo x y z" and uses it with the syscall exec
   
 */
