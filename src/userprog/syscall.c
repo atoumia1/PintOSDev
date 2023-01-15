@@ -43,16 +43,11 @@ void halt(void)
 }
 
 /* Exit is used to properly terminate a user program, returning an exit
-message or */
+message before terminating the current thread */
 void exit(int status)
 {
-  // if (status == EXIT_FAILURE || status > 0)
-  // {
-  //   printf("%s: exit failure(%d)\n", thread_name(), status);
-  // }
   struct thread *cur = thread_current();
   char* t_name = cur->name;
-  //cur->name = status;
   printf("%s: exit(%d)\n", t_name, status);
   thread_exit();
 }
@@ -80,7 +75,6 @@ bool remove(const char *file)
 }
 pid_t exec(const char *cmdline)
 {
-  //name passed incorrectly, needs tokenisation (if '\0') 
   pid_t pid = process_execute(cmdline);
     if (pid == TID_ERROR)
       return -1;
@@ -115,7 +109,7 @@ syscall_handler (struct intr_frame *f UNUSED)
   int *esp = f->esp;
   int sys_code = *esp;
 
-  //refuses to work atm, doesnt get syscodes when called to
+  //Doesn't work at the moment, doesnt get syscodes when called to
   // does that mean they're not on the stack, or we call to them wrong
   //or stack doesnt load them properly(least likely)
   //int sys_code = *(int*)f->esp;
@@ -158,11 +152,11 @@ syscall_handler (struct intr_frame *f UNUSED)
         case SYS_EXEC:
     {
       printf("sys exec called\n");
-      printf("exec test1 \n");
+      //printf("exec test1 \n");
       int testExec = exec((const char *)*(esp + 1));
-      printf("exec test2\n");
+      //printf("exec test2\n");
       f->eax = testExec;
-      printf("exec test3\n");
+      //printf("exec test3\n");
       break;
     }
      case SYS_WRITE:
