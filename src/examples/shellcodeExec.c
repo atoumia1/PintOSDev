@@ -1,5 +1,4 @@
-/* klaar@ida
-
+/*
 code based on Litborn, J. (2022)
 
 Litborn, J.(2022), Pintos, Available from: https://gitlab.liu.se/johli603/pintos/-/blob/master_origin/src/examples/crack.c
@@ -7,17 +6,13 @@ Litborn, J.(2022), Pintos, Available from: https://gitlab.liu.se/johli603/pintos
 
 #include <syscall.h>
 #include <stdio.h>
-
-/* This it the below assembly code in binary form. It runs. To get it,
-  just compile the code below and use the debugger to dump the code
-  in the main function. */
+/* Assembly code  */
 
 char shellcode[] =
   "\x90\x90\x90\x90\x90\xe9\x0b\x00"
   "\x00\x00\x6a\x02\xcd\x30\x31\xc0"
   "\x50\x40\x50\xcd\x30\xe8\xf0\xff"
-  "\xff\xff""crack";
-
+  "\xff\xff""echo x y z";
 /*
   The shellcode above can be translated to the following steps
   
@@ -28,7 +23,7 @@ char shellcode[] =
   4:  90                      nop
   5:  e9 0b 00 00 00          jmp    0x15     -- jumps to position 15
   a:  6a 02                   push   0x2      -- exec syscall number
-  c:  cd 30                   int    0x30
+  c:  cd 30                   int    0x30     -- creates interupt
   e:  31 c0                   xor    eax,eax  -- returns value of 0
   10: 50                      push   eax      -- pushes new 0 value
   11: 40                      inc    eax      -- incriments value of eax by 1

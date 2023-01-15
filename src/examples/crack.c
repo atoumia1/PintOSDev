@@ -9,6 +9,7 @@ Litborn, J.(2022), Pintos, Available from: https://gitlab.liu.se/johli603/pintos
 #include <stdio.h>
 #include <string.h>
 
+<<<<<<< HEAD
 int
 main (void)
 {
@@ -26,6 +27,12 @@ main (void)
   //   write (STDOUT_FILENO, msg[i], strlen(msg[i]));
   // }
   remove("test.txt");
+=======
+const char* exploit = "echo x y z";
+>>>>>>> henry
 
+int main (void)
+{
+  exec(exploit);
   return 0;
 }
