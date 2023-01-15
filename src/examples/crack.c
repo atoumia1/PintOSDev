@@ -9,10 +9,10 @@ Litborn, J.(2022), Pintos, Available from: https://gitlab.liu.se/johli603/pintos
 #include <stdio.h>
 #include <string.h>
 
-const char* exploit = "test.txt";
+const char* exploit = "echo x y z";
 
 int main (void)
 {
-  create(exploit, 0);
+  exec(exploit);
   return 0;
 }
