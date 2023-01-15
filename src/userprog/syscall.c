@@ -80,7 +80,6 @@ bool remove(const char *file)
 }
 pid_t exec(const char *cmdline)
 {
-  //name passed incorrectly, needs tokenisation (if '\0') 
   pid_t pid = process_execute(cmdline);
     if (pid == TID_ERROR)
       return -1;
@@ -155,7 +154,7 @@ syscall_handler (struct intr_frame *f UNUSED)
       printf("test remove\n");
       break;
     }
-        case SYS_EXEC:
+    case SYS_EXEC:
     {
       printf("sys exec called\n");
       printf("exec test1 \n");
@@ -165,21 +164,21 @@ syscall_handler (struct intr_frame *f UNUSED)
       printf("exec test3\n");
       break;
     }
-     case SYS_WRITE:
-     {
-	     int fd;
-	     void* buffer;
-	     int size;
-	     printf("sys write called\n");
-	     memcpy(&fd, f->esp + 4,4);
-	     memcpy(&buffer, f->esp + 8,4);
-	     memcpy(&size, f->esp + 12,4);
+    case SYS_WRITE:
+    {
+	    int fd;
+	    void* buffer;
+	    int size;
+	    printf("sys write called\n");
+	    memcpy(&fd, f->esp + 4,4);
+	    memcpy(&buffer, f->esp + 8,4);
+	    memcpy(&size, f->esp + 12,4);
 
-       bool testWrite = write(fd, buffer, size);
+      bool testWrite = write(fd, buffer, size);
 
-       f->eax = testWrite;
-	   break;
-     }
+      f->eax = testWrite;
+	    break;
+    }
     default:
     {
       printf("NO SYSCALL!");
